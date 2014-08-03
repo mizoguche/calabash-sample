@@ -129,11 +129,9 @@ end
 end
 
 ならば /^リストビューに"(\d+)"個以上のアイテムが表示されていること$/ do |count|
-  elements = wait_for_elements_exist("android.widget.ListView index:0 *")
-  p elements
-  raise wait_error("ListView does not have #{count} items") if elements.count < count
+  wait_for_elements_exist("android.widget.ListView index:0 TiqavListItemView index:#{count.to_i - 1}")
 end
 
 もし /リストアイテムの"(\d+)"番目をタップする$/ do |index|
-  step %{I press list item number #{index}}
+  tap_when_element_exists("android.widget.ListView index:0 TiqavListItemView index:#{index.to_i - 1}")
 end
